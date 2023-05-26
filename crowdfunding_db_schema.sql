@@ -1,12 +1,12 @@
 -- Data Engineering
--- drop tables if they exists
+-- Drop tables if they exists
 
 drop table if exists contacts cascade;
 drop table if exists category cascade;
 drop table if exists subcategory cascade;
 drop table if exists campaign cascade;
 
--- create tables
+-- Create Tables
 CREATE TABLE category (
 	category_id varchar NOT NULL,
 	category varchar (100) NOT NULL,
@@ -48,8 +48,24 @@ CREATE TABLE campaign (
 	foreign key (subcategory_id) references subcategory(subcategory_id)
 );
 
+-- PATH to import data for tables into our DB
+copy category from
+'/private/tmp/crowdfunding_ETL/category.csv' 
+csv header delimiter ',';
 
--- check that db was created
+copy subcategory from
+'/private/tmp/crowdfunding_ETL/subcategory.csv' 
+csv header delimiter ',';
+
+copy contacts from
+'/private/tmp/crowdfunding_ETL/contacts.csv' 
+csv header delimiter ',';
+
+copy campaign from
+'/private/tmp/crowdfunding_ETL/campaign.csv' 
+csv header delimiter ',';
+
+-- Query the DB & ensure proper output
 select * from category;
 select * from subcategory;
 select * from contacts;
